@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View,StatusBar,TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { StyleSheet, Text, View,StatusBar,TouchableOpacity,Animated } from 'react-native'
+import React, { useEffect ,useState} from 'react'
 import { useRoute } from '@react-navigation/native'
 import { Colors } from '../../constants/colors'
 import { Fonts } from '../../assets/Fonts'
@@ -7,6 +7,9 @@ import Resultcard from '../../components/resultCard'
 const Result = ({navigation}) => {
   const route=useRoute()
   useEffect(()=>{
+    setTimeout(()=>{
+      startShakeAnimation()
+    },300)
     navigation.setOptions({
       headerShown: true,
       headerStyle: {
@@ -18,11 +21,47 @@ const Result = ({navigation}) => {
       headerShadowVisible: false,
   })
   })
+
+
+  const [shakeAnimation] = useState(new Animated.Value(0));
+
+const startShakeAnimation = () => {
+  Animated.sequence([
+    Animated.timing(shakeAnimation, {
+      toValue: 20,
+      duration: 100,
+      useNativeDriver: true,
+    }),
+    Animated.timing(shakeAnimation, {
+      toValue: -20,
+      duration: 100,
+      useNativeDriver: true,
+    }),
+    Animated.timing(shakeAnimation, {
+      toValue: 0,
+      duration: 100,
+      useNativeDriver: true,
+    }),
+  ]).start();
+};
+
+
   return (
     <View style={styles.main_conatiner}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.Secondary} translucent={true} />
       <View style={styles.content_container}>
-<View style={styles.data_holder}>
+      <Animated.View
+  style={[
+    styles.data_holder,
+    {
+      transform: [
+        {
+          translateX: shakeAnimation,
+        },
+      ],
+    },
+  ]}
+>
 <Resultcard
 madeHighScore={route?.params?.madeHighScore}
 score={route?.params?.score}
@@ -38,7 +77,7 @@ onPress={()=>navigation.replace('Quiz')}
   style={styles.btn_text}
   >Restart Game</Text>
 </TouchableOpacity>
-      </View>
+      </Animated.View>
     </View>
     </View>
   )

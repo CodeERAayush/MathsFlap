@@ -2,9 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import LottieView from 'lottie-react-native'
 
-const Timer = ({onComplete,setSeconds}) => {
-console.log(setSeconds)
-
+const Timer = ({onComplete}) => {
     const [second, setSec] = useState(60);
     useEffect(() => {
         const timer = setInterval(() => {
