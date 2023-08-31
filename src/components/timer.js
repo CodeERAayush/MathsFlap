@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import LottieView from 'lottie-react-native'
 
-const Timer = ({onComplete}) => {
+const Timer = ({onComplete,level}) => {
     const [second, setSec] = useState(60);
     useEffect(() => {
         const timer = setInterval(() => {
@@ -10,7 +10,7 @@ const Timer = ({onComplete}) => {
             onComplete()
           }
           setSec((prev) => prev - 1);
-        }, 1000);
+        }, 1010-(level*10));
         return () => clearInterval(timer);
       },[second]);
   return (

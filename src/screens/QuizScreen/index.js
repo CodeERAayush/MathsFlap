@@ -17,7 +17,7 @@ const Quiz = ({ navigation }) => {
   const [hiScore, setHiScore] = useState()
   const [madeHighScore, setMadeHighScore] = useState(false)
   const [resetTimer, setTimer] = useState(true)
-
+  const [level, setLevel] = useState(0)
   const [flipAnimation] = useState(new Animated.Value(0));
 
 
@@ -40,8 +40,9 @@ const Quiz = ({ navigation }) => {
     setCount((prev) => prev + 1)
     setSubmit('')
     startFlipAnimation()
-    let a = Math.floor(Math.random() * (Math.ceil(questionsCount) * 100) + 1)
-    let b = Math.floor(Math.random() * 100 + 1)
+    score % 5 === 0 ? setLevel((prev) => prev + 1) : null
+    let a = Math.floor(Math.random() * (level * 100) + 1)
+    let b = Math.floor(Math.random() * (level * 100) + 1)
     let operators = ['+', '-']
     let operator = operators[Math.round(Math.random())]
     setQuestion(`${a}${operator}${b}`)
@@ -106,6 +107,7 @@ const Quiz = ({ navigation }) => {
   const showTimer = () => {
     return <Timer
       onComplete={() => checkAnswer('')}
+      level={level}
     />
   }
 
@@ -119,6 +121,7 @@ const Quiz = ({ navigation }) => {
       <View style={styles.content_container}>
         <View style={styles.score_container}>
           <Text style={styles.score_text}>Current Score. {score}</Text>
+          <Text style={[styles.score_text,{color:'green'}]}>Level. {level}</Text>
           <Text style={[styles.score_text, { color: Colors.Black }]}>HiScore. {hiScore}</Text>
         </View>
         <Animated.View
