@@ -41,8 +41,8 @@ const Quiz = ({ navigation }) => {
     setSubmit('')
     startFlipAnimation()
     score % 5 === 0 ? setLevel((prev) => prev + 1) : null
-    let a = Math.floor(Math.random() * (level * 100) + 1)
-    let b = Math.floor(Math.random() * (level * 100) + 1)
+    let a = Math.floor(Math.random() * (level+1 * 100) + 1)
+    let b = Math.floor(Math.random() * (level+1 * 100) + 1)
     let operators = ['+', '-']
     let operator = operators[Math.round(Math.random())]
     setQuestion(`${a}${operator}${b}`)
